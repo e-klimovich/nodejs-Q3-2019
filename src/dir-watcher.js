@@ -1,12 +1,15 @@
 const fs = require('fs');
+const events = require('events');
 
-module.exports = class DirWatcher {
+module.exports = class DirWatcher extends events.EventEmitter {
   watch(path, interval) {
+    console.log(`Filewatcher starts after ${interval}ms...`);
+
     setTimeout(() => {
-      console.log(`Start watching on '${path}' folder!`);
+      console.log(`Start watching '${path}' folder!`);
 
       fs.watch(path, (eventType, filename) => {
-        console.log(`${filename} changed (${eventType})`);
+        this.emit('change', `${path}/${filename}`);
       })
     }, interval)
   }

@@ -1,6 +1,9 @@
 const DirWatcher = require('./src/dir-watcher');
+const Importer = require('./src/importer');
 
-const w = new DirWatcher();
+const watcher = new DirWatcher();
+const importer = new Importer();
 
-w.watch('./data', 2000);
-
+importer.listen(watcher, {
+  isSync: false,
+});
