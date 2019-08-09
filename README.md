@@ -2,8 +2,14 @@
 node.js mentoring program
 
 ## First of all
-1. install `node.js`
-2. install dependencies with `npm install`
+- install `node.js`
+- install dependencies with `npm install`
 
-## Run
-1. build project with `npm run build`
+## Build to dist folder
+- build project before use terminal commands with `npm run build`
+
+## Use commands
+- run `node dist/index.js --action <type> --file <path>` according tasks
+
+## Help
+- run `node dist/index.js -h` for more information
