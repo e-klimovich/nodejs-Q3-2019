@@ -1,0 +1,31 @@
+{
+  "name": "nodejs-q3-2019",
+  "version": "1.0.0",
+  "description": "node.js mentoring program",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "7.5.5",
+    "@babel/core": "7.5.5",
+    "@babel/node": "7.5.5",
+    "@babel/preset-env": "7.5.5"
+  },
+  "scripts": {
+    "babel": "babel src --out-dir dist",
+    "json-server": "npm run babel && node ./dist/http-servers/json-server.js",
+    "html-server": "npm run babel && node ./dist/http-servers/html-server.js",
+    "echo-server": "npm run babel && node ./dist/http-servers/echo-server.js",
+    "plain-text-server": "npm run babel && node ./dist/http-servers/plain-text-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-klimovich/nodejs-Q3-2019.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/e-klimovich/nodejs-Q3-2019/issues"
+  },
+  "homepage": "https://github.com/e-klimovich/nodejs-Q3-2019#readme"
+}
