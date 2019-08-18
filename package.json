@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "node.js mentoring program",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.17.1"
+  },
   "devDependencies": {
     "@babel/cli": "7.5.5",
     "@babel/core": "7.5.5",
@@ -16,6 +18,7 @@
     "html-server": "npm run babel && node ./dist/http-servers/html-server.js",
     "echo-server": "npm run babel && node ./dist/http-servers/echo-server.js",
     "plain-text-server": "npm run babel && node ./dist/http-servers/plain-text-server.js",
+    "start": "npm run babel && node ./dist/app/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
