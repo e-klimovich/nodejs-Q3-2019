@@ -27,7 +27,7 @@ export const add = (req, res) => {
   const { id, name } = req.body;
 
   if (id && typeof(id) === 'string' && name && typeof(name) === 'string') {
-    global.db.products.push({ id, name });
+    global.db.users.push({ id, name });
 
     res.json({
       status: 200,

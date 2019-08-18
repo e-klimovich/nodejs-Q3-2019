@@ -1,5 +1,8 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
+
 import { productsRouter, usersRouter } from './routes';
+import { queryParser, coockieMiddleware } from './middlewares';
 
 global.db = {
   products: [
@@ -19,6 +22,11 @@ global.db = {
 const app = express();
 
 app.use(express.json());
+
+app.use(cookieParser())
+
+app.use(queryParser);
+app.use(coockieMiddleware);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
