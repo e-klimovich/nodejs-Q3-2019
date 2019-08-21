@@ -15,11 +15,7 @@
   },
   "scripts": {
     "babel": "babel src --out-dir dist",
-    "json-server": "npm run babel && node ./dist/http-servers/json-server.js",
-    "html-server": "npm run babel && node ./dist/http-servers/html-server.js",
-    "echo-server": "npm run babel && node ./dist/http-servers/echo-server.js",
-    "plain-text-server": "npm run babel && node ./dist/http-servers/plain-text-server.js",
-    "start": "npm run babel && node ./dist/app/server.js",
+    "start": "npm run babel && node ./dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
