@@ -1,7 +1,10 @@
 import express from 'express';
+import passport from 'passport';
+import cors from 'cors';
 
-import { productsRouter, usersRouter } from './routes';
+import { productsRouter, usersRouter, authRouter } from './routes';
 import initialDB from './__mock';
+import initAuth from './auth';
 
 global.db = initialDB;
 
@@ -9,14 +12,15 @@ const app = express();
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+app.use(passport.initialize());
+app.use(passport.session());
+initAuth(passport);
+
+app.use(cors());
 
 app.use('/products', productsRouter);
-app.use('/users', usersRouter);
+app.use('/users', passport.authenticate('jwt'), usersRouter);
+app.use('/', authRouter);
 
 const PORT = 8080;
 
