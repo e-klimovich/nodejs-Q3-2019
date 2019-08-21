@@ -7,20 +7,19 @@ export const getAll = (req, res) => {
 
 export const getById = (req, res) => {
   const { id } = req.params;
-  global.db.products.every((product) => {
-    if (product.id === id) {
-      res.json({
-        status: 200,
-        data: product
-      })
-      return false
-    }
+  const foundProduct = global.db.products.find((product) => product.id === id);
 
+  if (foundProduct) {
+    res.json({
+      status: 200,
+      data: foundProduct,
+    })
+  } else {
     res.status(404).json({
       status: 404,
       error: 'Product not found',
     })
-  })
+  }
 }
 
 export const getReviews = (req, res) => {

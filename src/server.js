@@ -1,32 +1,13 @@
 import express from 'express';
-import cookieParser from 'cookie-parser';
 
 import { productsRouter, usersRouter } from './routes';
-import { queryParser, coockieMiddleware } from './middlewares';
+import initialDB from './__mock';
 
-global.db = {
-  products: [
-    {
-      id: '0',
-      reviews: ['good', 'bad', 'ok'],
-    }
-  ],
-  users: [
-    {
-      id: '0',
-      name: 'John Doe',
-    }
-  ],
-}
+global.db = initialDB;
 
 const app = express();
 
 app.use(express.json());
-
-app.use(cookieParser())
-
-app.use(queryParser);
-app.use(coockieMiddleware);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -41,5 +22,4 @@ const PORT = 8080;
 
 app.listen(PORT, () => {
   console.log(`Server is listening on ${PORT}`)
-  return false;
 });
