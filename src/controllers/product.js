@@ -1,3 +1,5 @@
+import { Product } from '../models';
+
 export const getAll = (req, res) => {
   res.json({
     status: 200,
@@ -46,10 +48,10 @@ export const getReviews = (req, res) => {
 }
 
 export const add = (req, res) => {
-  const { id, reviews } = req.body;
+  const product = new Product(req.body);
 
-  if (id && typeof(id) === 'string' && reviews && Array.isArray(reviews)) {
-    global.db.products.push({ id, reviews });
+  if (product.isValid()) {
+    global.db.products.push(req.body);
 
     res.json({
       status: 200,

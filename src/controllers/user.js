@@ -1,3 +1,5 @@
+import { User } from '../models';
+
 export const getAll = (req, res) => {
   res.json({
     status: 200,
@@ -23,10 +25,10 @@ export const getById = (req, res) => {
 }
 
 export const add = (req, res) => {
-  const { id, name } = req.body;
+  const user = new User(req.body);
 
-  if (id && typeof(id) === 'string') {
-    global.db.users.push({ id, name });
+  if (user.isValid()) {
+    global.db.users.push(req.body);
 
     res.json({
       status: 200,

@@ -12,14 +12,15 @@ export default (passport) => {
       secretOrKey : jwtSecretKey,
     },
     (payload, done) => {
-      return done(null, { user: 42 })
+      const { username } = payload;
+      return done(null, { username })
     }
   ))
 
   passport.serializeUser((user, done) => {
     done(null, user);
   })
-  
+
   passport.deserializeUser((user, done) => {
     done(null, user);
   })

@@ -2,8 +2,10 @@ import jwt from 'jsonwebtoken';
 
 import { jwtSecretKey } from '../constants';
 
-export const login = (req, res) => {
-  const token = jwt.sign('payload', jwtSecretKey);
+const _mockedUser = { username: 'John', password: '42' };
 
-  res.end(token)
+export const login = (req, res) => {
+  const token = jwt.sign(_mockedUser, jwtSecretKey);
+
+  res.json({ token })
 }
