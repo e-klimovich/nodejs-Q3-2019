@@ -2,10 +2,21 @@ import jwt from 'jsonwebtoken';
 
 import { jwtSecretKey } from '../constants';
 
-const _mockedUser = { username: 'John', password: '42' };
-
 export const login = (req, res) => {
-  const token = jwt.sign(_mockedUser, jwtSecretKey);
+  const { email, name, password } = req.body;
+  const token = jwt.sign({ email, password }, jwtSecretKey);
 
-  res.json({ token })
+  res.json({
+    data: {
+      user: {
+        email,
+        name,
+      }
+    },
+    token: token,
+  })
+}
+
+export const loginFacebook = (req, res) => {
+  res.redirect('/')
 }

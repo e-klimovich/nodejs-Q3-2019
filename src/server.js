@@ -20,7 +20,7 @@ app.use(cors());
 
 app.use('/products', productsRouter);
 app.use('/users', passport.authenticate('jwt'), usersRouter);
-app.use('/', authRouter);
+app.use('/auth', authRouter);
 
 const PORT = 8080;
 
