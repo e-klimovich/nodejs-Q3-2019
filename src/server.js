@@ -1,6 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import cors from 'cors';
+import session from 'express-session';
 
 import { productsRouter, usersRouter, authRouter } from './routes';
 import initialDB from './__mock';
@@ -11,6 +12,7 @@ global.db = initialDB;
 const app = express();
 
 app.use(express.json());
+app.use(session({ secret: 'dfcg123vhbn', resave: false, saveUninitialized: true, }))
 
 app.use(passport.initialize());
 app.use(passport.session());
