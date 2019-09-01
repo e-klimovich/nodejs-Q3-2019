@@ -22,7 +22,7 @@ initAuth(passport);
 
 app.use(cors());
 
-// app.use('/products', productsRouter);
+app.use('/products', passport.authenticate('jwt'), require('./routes/products'));
 app.use('/users', passport.authenticate('jwt'), require('./routes/user'));
 app.use('/auth', require('./routes/auth'));
 

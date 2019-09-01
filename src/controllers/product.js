@@ -55,7 +55,14 @@ const getReviews = (req, res) => {
 const add = (req, res) => {
   const { name, brand, price, options, reviews } = req.body;
 
-  Product.findOrCreate({ where: { name, brand }, default: { name, brand, price, options, reviews } })
+  Product.findOrCreate({ where: { name, brand },
+    default: {
+      name,
+      brand,
+      price,
+      options: JSON.stringify(options),
+      reviews: JSON.stringify(reviews),
+    }})
     .then(([product, created]) => {
       if (created) {
         res.json({
