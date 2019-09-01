@@ -1,65 +1,77 @@
-import { Product } from '../models';
+const Product = require('../models').product;
 
-export const getAll = (req, res) => {
-  res.json({
-    status: 200,
-    data: global.db.products,
-  })
+const getAll = (req, res) => {
+  Product.findAll()
+    .then((products) => {
+      res.json({
+        status: 200,
+        data: products,
+      })
+    })
 }
 
-export const getById = (req, res) => {
+const getById = (req, res) => {
   const { id } = req.params;
-  const foundProduct = global.db.products.find((product) => product.id === id);
 
-  if (foundProduct) {
-    res.json({
-      status: 200,
-      data: foundProduct,
+  Product.findByPk(id)
+    .then((product) => {
+      if (product) {
+        res.json({
+          status: 200,
+          data: product,
+        })
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Product not found',
+        })
+      }
     })
-  } else {
-    res.status(404).json({
-      status: 404,
-      error: 'Product not found',
-    })
-  }
 }
 
-export const getReviews = (req, res) => {
+const getReviews = (req, res) => {
   const { id, reviews } = req.params;
 
   if (reviews !== 'reviews') {
     res.status(404).end()
   }
 
-  global.db.products.every((product) => {
-    if (product.id === id) {
-      res.json({
-        status: 200,
-        data: product.reviews,
-      })
-      return false
-    }
-
-    res.status(404).json({
-      status: 404,
-      error: 'Product not found',
+  Product.findByPk(id)
+    .then((product) => {
+      if (product) {
+        res.json({
+          status: 200,
+          data: product.reviews,
+        })
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Product not found',
+        })
+      }
     })
-  })
 }
 
-export const add = (req, res) => {
-  const product = new Product(req.body);
+const add = (req, res) => {
+  const { name, brand, price, options, reviews } = req.body;
 
-  if (product.isValid()) {
-    global.db.products.push(req.body);
-
-    res.json({
-      status: 200,
+  Product.findOrCreate({ where: { name, brand }, default: { name, brand, price, options, reviews } })
+    .then(([product, created]) => {
+      if (created) {
+        res.json({
+          status: 200,
+        })
+      } else {
+        res.json({
+          error: 'not created',
+        })
+      }
     })
-  }
+}
 
-  res.status(422).json({
-    status: 422,
-    error: 'Invalid data format'
-  })
+module.exports = {
+  getAll,
+  getById,
+  getReviews,
+  add,
 }

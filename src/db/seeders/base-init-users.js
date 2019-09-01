@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('users', {
@@ -16,7 +14,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       age: {
-        type: Sequelize.NUMBER
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -26,16 +24,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    }).then(() => {
+      return queryInterface.bulkInsert('users', [{
+        name: 'John Snow',
+        email: 'john.snow@host.ext',
+        age: 66,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }])
     })
   },
 
-  down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
-  }
+  down: (queryInterface, Sequelize) => {}
 };

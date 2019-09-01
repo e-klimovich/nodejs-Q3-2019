@@ -1,52 +1,49 @@
-const user = require('../models/user');
+const User = require('../models').user;
 
 const getAll = (req, res) => {
-  user.findAll()
+  User.findAll()
     .then((users) => {
       res.json({
         status: 200,
         data: users,
       })
     })
-    .catch((err) => {
-      console.error('Error', err)
-    })
 };
 
 const getById = (req, res) => {
-  // const { id } = req.params;
-  // const foundUser = global.db.users.find((user) => user.id === id);
-
-  // if (foundUser) {
-  //   res.json({
-  //     status: 200,
-  //     data: foundUser,
-  //   })
-  // } else {
-  //   res.status(404).json({
-  //     status: 404,
-  //     error: 'Product not found',
-  //   })
-  // }
-  console.log(42)
+  const { id } = req.params;
+  
+  User.findByPk(id)
+    .then((user) => {
+      if (user) {
+        res.json({
+          status: 200,
+          data: user,
+        })
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'User not found',
+        })
+      }
+    })
 };
 
 const add = (req, res) => {
-  // const user = new User(req.body);
+  const { name, email, age } = req.body;
 
-  // if (user.isValid()) {
-  //   global.db.users.push(req.body);
-
-  //   res.json({
-  //     status: 200,
-  //   })
-  // }
-
-  // res.status(422).json({
-  //   status: 422,
-  //   error: 'Invalid data format'
-  // })
-  console.log(42)
+  User.findOrCreate({ where: { email  }, defaults: { name, age } })
+    .then(([user, created]) => {
+      if (created) {
+        res.json({
+          status: 200,
+        })
+      } else {
+        res.json({
+          error: 'not created',
+        })
+      }
+    })
 };
 
 module.exports = {

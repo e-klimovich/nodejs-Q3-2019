@@ -3,13 +3,13 @@ const express = require('express');
 const passport = require('passport');
 const cors = require('cors');
 const session = require('express-session');
-// import { db } from './db';
 
+const db = require('./models').sequelize;
 const initAuth = require('./auth');
 
-// db.authenticate()
-//   .then(() => { console.log('Connection successfully...') })
-//   .catch((err) => { console.error('Connecting error', err) })
+db.authenticate()
+  .then(() => { console.log('Connection successfully...') })
+  .catch((err) => { console.error('Connecting error', err) })
 
 const app = express();
 
