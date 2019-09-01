@@ -1,13 +1,15 @@
-import express from 'express';
-import passport from 'passport';
-import cors from 'cors';
-import session from 'express-session';
+require('dotenv').config();
+const express = require('express');
+const passport = require('passport');
+const cors = require('cors');
+const session = require('express-session');
+// import { db } from './db';
 
-import { productsRouter, usersRouter, authRouter } from './routes';
-import initialDB from './__mock';
-import initAuth from './auth';
+const initAuth = require('./auth');
 
-global.db = initialDB;
+// db.authenticate()
+//   .then(() => { console.log('Connection successfully...') })
+//   .catch((err) => { console.error('Connecting error', err) })
 
 const app = express();
 
@@ -20,12 +22,10 @@ initAuth(passport);
 
 app.use(cors());
 
-app.use('/products', productsRouter);
-app.use('/users', passport.authenticate('jwt'), usersRouter);
-app.use('/auth', authRouter);
+// app.use('/products', productsRouter);
+app.use('/users', passport.authenticate('jwt'), require('./routes/user'));
+app.use('/auth', require('./routes/auth'));
 
-const PORT = 8080;
-
-app.listen(PORT, () => {
-  console.log(`Server is listening on ${PORT}`)
+app.listen(process.env.APP_PORT, () => {
+  console.log(`Server is listening on ${process.env.APP_PORT}`)
 });

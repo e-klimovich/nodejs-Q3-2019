@@ -1,16 +1,11 @@
-export default class {
-  constructor(props) {
-    this.props = props;
-  }
+module.exports = (sequelize, DataTypes) => {
+  const user = sequelize.define('user', {
+    name: DataTypes.STRING,
+    email: DataTypes.STRING,
+    age: DataTypes.NUMBER
+  }, {});
 
-  isValid() {
-    const { id, name, email, age, ...rest } = this.props;
+  user.associate = function(models) {};
 
-    return (
-      id && typeof id === 'string' &&
-      name && typeof name === 'string' &&
-      email && typeof email === 'string' &&
-      age && typeof age === 'string'
-    ) && (Object.keys(rest).length === 0)
-  }
-}
+  return user;
+};

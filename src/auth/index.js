@@ -1,15 +1,16 @@
-import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt';
-import { Strategy as LocalStrategy } from 'passport-local';
-import { Strategy as FacebookStrategy } from 'passport-facebook';
+const passportJwt = require('passport-jwt');
+const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook');
 
-import { jwtSecretKey } from '../constants';
+const JWTStrategy = passportJwt.Strategy;
+const ExtractJwt = passportJwt.ExtractJwt;
 
-export default (passport) => {
+module.exports = (passport) => {
   // JWT strategy config
   passport.use(new JWTStrategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey : jwtSecretKey,
+      secretOrKey : process.env.JWT_SECRET_KEY,
     },
     (payload, done) => {
       const { email } = payload;
@@ -31,8 +32,8 @@ export default (passport) => {
   // Facebook strategy config
   passport.use(new FacebookStrategy(
     {
-      clientID: '351002865850718',
-      clientSecret: '4045411a7762022dc163985b5d48d2c1',
+      clientID: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       callbackURL: 'http://localhost:8080/auth/facebook/callback',
       profileFields: ['displayName'],
     },
@@ -48,4 +49,4 @@ export default (passport) => {
   passport.deserializeUser((user, done) => {
     done(null, user);
   })
-}
+};

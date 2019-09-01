@@ -1,42 +1,56 @@
-import { User } from '../models';
+const user = require('../models/user');
 
-export const getAll = (req, res) => {
-  res.json({
-    status: 200,
-    data: global.db.users,
-  })
-}
-
-export const getById = (req, res) => {
-  const { id } = req.params;
-  const foundUser = global.db.users.find((user) => user.id === id);
-
-  if (foundUser) {
-    res.json({
-      status: 200,
-      data: foundUser,
+const getAll = (req, res) => {
+  user.findAll()
+    .then((users) => {
+      res.json({
+        status: 200,
+        data: users,
+      })
     })
-  } else {
-    res.status(404).json({
-      status: 404,
-      error: 'Product not found',
+    .catch((err) => {
+      console.error('Error', err)
     })
-  }
-}
+};
 
-export const add = (req, res) => {
-  const user = new User(req.body);
+const getById = (req, res) => {
+  // const { id } = req.params;
+  // const foundUser = global.db.users.find((user) => user.id === id);
 
-  if (user.isValid()) {
-    global.db.users.push(req.body);
+  // if (foundUser) {
+  //   res.json({
+  //     status: 200,
+  //     data: foundUser,
+  //   })
+  // } else {
+  //   res.status(404).json({
+  //     status: 404,
+  //     error: 'Product not found',
+  //   })
+  // }
+  console.log(42)
+};
 
-    res.json({
-      status: 200,
-    })
-  }
+const add = (req, res) => {
+  // const user = new User(req.body);
 
-  res.status(422).json({
-    status: 422,
-    error: 'Invalid data format'
-  })
-}
+  // if (user.isValid()) {
+  //   global.db.users.push(req.body);
+
+  //   res.json({
+  //     status: 200,
+  //   })
+  // }
+
+  // res.status(422).json({
+  //   status: 422,
+  //   error: 'Invalid data format'
+  // })
+  console.log(42)
+};
+
+module.exports = {
+  getAll,
+  getById,
+  add,
+};

@@ -1,14 +1,9 @@
-import { Router } from 'express';
-import * as products from '../controllers/product';
+const router = require('express').Router();
+const product = require('../controllers/product');
 
-const router = Router();
+router.get('/', product.getAll);
+router.get('/:id', product.getById);
+router.get('/:id/:reviews', product.getReviews);
+router.post('/', product.add);
 
-router.get('/', products.getAll)
-
-router.get('/:id', products.getById)
-
-router.get('/:id/:reviews', products.getReviews)
-
-router.post('/', products.add)
-
-export default router
+module.exports = router;

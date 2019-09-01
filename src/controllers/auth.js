@@ -1,10 +1,8 @@
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
-import { jwtSecretKey } from '../constants';
-
-export const login = (req, res) => {
+const login = (req, res) => {
   const { email, name, password } = req.body;
-  const token = jwt.sign({ email, password }, jwtSecretKey);
+  const token = jwt.sign({ email, password }, process.env.JWT_SECRET_KEY);
 
   res.json({
     data: {
@@ -17,6 +15,11 @@ export const login = (req, res) => {
   })
 }
 
-export const loginFacebook = (req, res) => {
+const loginFacebook = (req, res) => {
   res.redirect('/')
+}
+
+module.exports = {
+  login,
+  loginFacebook,
 }
