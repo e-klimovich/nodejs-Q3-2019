@@ -1,11 +1,11 @@
-module.exports = (sequelize, DataTypes) => {
-  const user = sequelize.define('user', {
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    age: DataTypes.NUMBER
-  }, {});
+const mongoose = require('mongoose');
 
-  user.associate = function(models) {};
+const Schema = mongoose.Schema;
 
-  return user;
-};
+const userSchema = new Schema({
+  name: String,
+  email: String,
+  age: Number
+})
+
+module.exports = mongoose.model('User', userSchema)

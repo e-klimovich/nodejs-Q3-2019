@@ -1,13 +1,13 @@
-module.exports = (sequelize, DataTypes) => {
-  const product = sequelize.define('product', {
-    name: DataTypes.STRING,
-    brand: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    options: DataTypes.ARRAY(DataTypes.STRING),
-    reviews: DataTypes.ARRAY(DataTypes.STRING),
-  }, {});
+const mongoose = require('mongoose');
 
-  product.associate = function(models) {};
+const Schema = mongoose.Schema;
 
-  return product;
-};
+const productSchema = new Schema({
+  name: String,
+  brand: String,
+  price: Number,
+  options: String,
+  reviews: String,
+})
+
+module.exports = mongoose.model('Product', productSchema)

@@ -1,49 +1,62 @@
-const User = require('../models').user;
+const User = require('../models/user');
 
 const getAll = (req, res) => {
-  User.findAll()
-    .then((users) => {
-      res.json({
-        status: 200,
-        data: users,
-      })
+  User.find({}, (err, users) => {
+    if (err) {
+      console.log(err);
+      res.end();
+    }
+
+    res.json({
+      status: 200,
+      data: users,
     })
-};
+  })
+}
 
 const getById = (req, res) => {
   const { id } = req.params;
-  
-  User.findByPk(id)
-    .then((user) => {
-      if (user) {
-        res.json({
-          status: 200,
-          data: user,
-        })
-      } else {
-        res.status(404).json({
-          status: 404,
-          error: 'User not found',
-        })
-      }
-    })
-};
+
+  User.findById(id, (err, user) => {
+    if (err) {
+      console.log(err);
+      res.end();
+    }
+
+    if (user) {
+      res.json({
+        status: 200,
+        data: user,
+      })
+    } else {
+      res.status(404).json({
+        status: 404,
+        error: 'User not found',
+      })
+    }
+  })
+}
 
 const add = (req, res) => {
   const { name, email, age } = req.body;
 
-  User.findOrCreate({ where: { email  }, defaults: { name, age } })
-    .then(([user, created]) => {
-      if (created) {
-        res.json({
-          status: 200,
-        })
-      } else {
-        res.json({
-          error: 'not created',
-        })
-      }
+  const user = new User({
+    name,
+    email,
+    age
+  })
+
+  user.save((err, user) => {
+    if (err) {
+      res.json({
+        error: 'not created',
+      })
+    }
+
+    res.json({
+      status: 200,
     })
+  })
 };
 
 module.exports = {

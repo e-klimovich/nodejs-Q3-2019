@@ -3,13 +3,16 @@ const express = require('express');
 const passport = require('passport');
 const cors = require('cors');
 const session = require('express-session');
+const mongoose = require('mongoose');
 
-const db = require('./models').sequelize;
 const initAuth = require('./auth');
 
-db.authenticate()
-  .then(() => { console.log('Connection successfully...') })
-  .catch((err) => { console.error('Connecting error', err) })
+mongoose.connect(
+  `mongodb://localhost:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+  { useUnifiedTopology: true, useNewUrlParser: true }
+)
+  .then(() => console.log(`Connected to db: ${process.env.DB_NAME}`))
+  .catch((err) => console.log(err))
 
 const app = express();
 
@@ -28,4 +31,5 @@ app.use('/auth', require('./routes/auth'));
 
 app.listen(process.env.APP_PORT, () => {
   console.log(`Server is listening on ${process.env.APP_PORT}`)
+  console.log(`Defined city is ${require('./defineCity')().name}`)
 });

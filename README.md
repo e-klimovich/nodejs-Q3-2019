@@ -4,9 +4,10 @@ node.js mentoring program
 ## First of all
 - install `node.js`
 - install dependencies with `npm install`
-- install postgres DB from `https://postgresapp.com/`
-- config DB in `src/db/config.json`
-- use `sequelize db:seed:all` command to run seeds (two tables should be created with mock data)
+- install mongo DB from `https://www.mongodb.com/`
+- config DB in `.env`
+- use `npm run seed` command to run seeds (two collections should be created with mock data)
+- go to `src/db` folder and use `migrate-mongo up` command to run migration (in collection users mocked user name shoud be changed)
 
 ## Run project
 - use `npm start` to start project
