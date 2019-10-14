@@ -8,7 +8,6 @@ const getAll = (req, res) => {
     }
 
     res.json({
-      status: 200,
       data: users,
     })
   })
@@ -25,12 +24,10 @@ const getById = (req, res) => {
 
     if (user) {
       res.json({
-        status: 200,
         data: user,
       })
     } else {
       res.status(404).json({
-        status: 404,
         error: 'User not found',
       })
     }
@@ -54,7 +51,7 @@ const add = (req, res) => {
     }
 
     res.json({
-      status: 200,
+      status: 'User created'
     })
   })
 };
