@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: HW8
-  description: Mentoring program
+  description: Mentoring program node
   version: 0.0.1
 servers:
   - url: http://localhost:8080/
